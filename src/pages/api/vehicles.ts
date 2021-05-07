@@ -1,12 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-const sqlite = require("sqlite");
-const sqlite3 = require("sqlite3");
+import { open } from "sqlite";
+import sqlite3 from "sqlite3";
+import { authenticated } from "./people";
 
-export default async function getAllVehicles(req: NextApiRequest, res: NextApiResponse) {
-    const db = await sqlite.open({
+export default authenticated(async function getAllVehicles(req: NextApiRequest, res: NextApiResponse) {
+    const db = await open({
         filename: './database.sqlite',
         driver: sqlite3.Database
     });
     const vehicles = await db.all('SELECT * FROM vehicle');
     res.json(vehicles);
-}
+})

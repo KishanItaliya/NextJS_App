@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "bcrypt": "^5.0.1",
     "isomorphic-unfetch": "3.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "9.3.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -19,6 +21,7 @@
     "swr": "0.2.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.1",
     "@types/node": "^15.0.2",
     "@types/react": "^17.0.5",
     "json-server": "0.16.1",
