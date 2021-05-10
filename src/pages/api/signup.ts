@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { hash } from "bcrypt";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import { openDB } from "../../../api/openDB";
+
 
 export default async function signup(req: NextApiRequest, res: NextApiResponse) {
-    const db = await open({
-        filename: './database.sqlite',
-        driver: sqlite3.Database
-    });
+    const db = await openDB();
 
     if(req.method === 'POST') {
         hash(req.body.password, 10, async function(err, hash) {

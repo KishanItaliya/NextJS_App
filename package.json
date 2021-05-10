@@ -9,6 +9,8 @@
     "mock-server": "json-server --watch ./db.json -p 4001 -d 100"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "bcrypt": "^5.0.1",
     "cookie": "^0.4.1",
     "isomorphic-unfetch": "3.0.0",

@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import { openDB } from "../../../../../api/openDB";
 
 export default async function getPersonById(req: NextApiRequest, res: NextApiResponse) {
-    const db = await open({
-        filename: './database.sqlite',
-        driver: sqlite3.Database
-    });
+    const db = await openDB();
 
     if(req.method === 'PUT') {
         const statement = await db.prepare('UPDATE person SET name = ?, email = ? WHERE id = ?')

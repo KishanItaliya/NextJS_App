@@ -1,6 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import { openDB } from "../../../api/openDB";
 import { secret } from "../../../api/secret";
 const jwt = require("jsonwebtoken");
 
@@ -14,10 +13,7 @@ export const authenticated = (fn: NextApiHandler) => async (req: NextApiRequest,
 }
 
 export default authenticated(async function getPeople(req: NextApiRequest, res: NextApiResponse) {
-    const db = await open({
-        filename: './database.sqlite',
-        driver: sqlite3.Database
-    });
+    const db = await openDB();
     const people = await db.all('SELECT id, email, name FROM person');
     res.json(people);
 });

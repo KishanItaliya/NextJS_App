@@ -1,16 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { compare } from "bcrypt";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import { openDB } from "../../../api/openDB";
 import { secret } from "../../../api/secret";
 const jwt = require("jsonwebtoken");
 import cookie from "cookie";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
-    const db = await open({
-        filename: './database.sqlite',
-        driver: sqlite3.Database
-    });
+    const db = await openDB();
 
     if(req.method === 'POST') {
         const person = await db.get('SELECT * FROM person WHERE email = ?',
