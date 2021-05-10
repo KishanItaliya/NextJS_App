@@ -4,6 +4,7 @@ import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 import { secret } from "../../../api/secret";
 const jwt = require("jsonwebtoken");
+import cookie from "cookie";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
     const db = await open({
@@ -20,7 +21,15 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
                 if(!err && result) {
                     const claims = {sub: person.id, personEmail: person.email};
                     const jwtoken = jwt.sign(claims, secret, { expiresIn: 60 * 60})
-                    res.json({authToken: jwtoken});
+
+                    res.setHeader("Set-Cookie", cookie.serialize("auth", jwtoken, {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV !== 'development',
+                        sameSite: "strict",
+                        maxAge: 3600,
+                        path: "/"
+                    }))
+                    res.json({message: "Welcome back to the app..."});
                 }
                 else {
                     res.json({message: "OOPS, Something went wrong!!"})
